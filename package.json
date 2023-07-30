@@ -26,7 +26,6 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "ESLINT_USE_FLAT_CONFIG=true eslint -c eslint.config.mjs --ext js,jsx,ts,tsx --quiet --fix --",
       "prettier --write"
     ],
     "*.{md,mdx,mjs,yml,yaml,css}": [
