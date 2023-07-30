@@ -4,14 +4,57 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "lint.fix": "turbo run lint -- --fix",
+    "lint.eslint": "ESLINT_USE_FLAT_CONFIG=true npx eslint -c eslint.config.mjs ./apps/tests.ts",
+    "lint.language": "alex .",
+    "lint.typescript": "turbo run typescript",
+    "lint.no-typescript": "run-p prettier.check lint.eslint lint.language",
+    "lint.eslint.test": "ESLINT_USE_FLAT_CONFIG=true npx eslint -c eslint.config.mjs ./apps/tests.ts",
+    "prettier.check": "prettier --check .",
+    "prettier.fix": "prettier --write .",
+    "prettier.format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "types": "tsc --noEmit",
+    "types.check": "pnpm -r run types.check",
+    "git.reset": "git reset --hard HEAD",
+    "git.clean": "git clean -d -x -e node_modules -e packages -f",
+    "git.commit": "git commit",
+    "git.add.all": "git add .",
+    "git.husky.install": "husky install",
+    "release.canary": "git checkout canary && git pull && changesets version prerelease --preid canary --force-publish && releanpm i releasese --pre --skip-questions --show-url",
+    "release.stable": "lerna version --force-publish",
+    "ci.publish": "pnpm publish -r"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "ESLINT_USE_FLAT_CONFIG=true eslint -c eslint.config.mjs --ext js,jsx,ts,tsx --quiet --fix --",
+      "prettier --write"
+    ],
+    "*.{md,mdx,mjs,yml,yaml,css}": [
+      "prettier --write"
+    ]
   },
   "devDependencies": {
+    "@changesets/changelog-github": "^0.4.8",
+    "@changesets/cli": "^2.26.2",
+    "@myworldx/eslint-config": "workspace:*",
+    "@myworldx/prettier-config": "workspace:*",
+    "@myworldx/ts-config": "workspace:*",
     "@turbo/gen": "^1.9.7",
-    "eslint": "^7.32.0",
-    "eslint-config-custom": "workspace:*",
-    "prettier": "^2.5.1",
-    "turbo": "^1.9.7"
+    "@types/eslint": "8.44.1",
+    "@types/node": "^20.4.5",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.45.0",
+    "eslint-config-next": "^13.4.8",
+    "eslint-config-prettier": "^8.8.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.2.3",
+    "prettier": "^3.0.0",
+    "turbo": "latest"
   },
-  "packageManager": "pnpm@7.15.0"
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "packageManager": "pnpm@8.6.10"
 }

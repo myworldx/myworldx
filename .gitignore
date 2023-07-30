@@ -5,8 +5,29 @@ node_modules
 .pnp
 .pnp.js
 
-# testing
+# logs & pids
+*.log
+pids
+*.cpuprofile
+.husky/_
+
+# coverage
+.nyc_output
 coverage
+
+# test output
+test/**/out*
+test/**/next-env.d.ts
+.DS_Store
+/e2e-tests
+test/tmp/**
+test/.trace
+test/traces
+
+# Editors
+**/.idea
+**/.#*
+.nvmrc
 
 # next.js
 .next/
@@ -29,8 +50,13 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
-# turbo
-.turbo
+.now
 
-# vercel
-.vercel
+# Cache
+*.tsbuildinfo
+.swc/
+.turbo
+**/.turbo
+
+# Build
+dist
