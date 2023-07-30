@@ -8,11 +8,6 @@
     "url": "/myworldx/packages/eslint_config"
   },
   "author": "myworldx",
-  "scripts": {
-    "build": "tsup ./*.ts --format esm --dts ",
-    "dev": "tsup ./*.ts --format esm --dts --watch",
-    "lint": "eslint ./**/*.ts* --fix"
-  },
   "dependencies": {
     "@next/eslint-plugin-next": "13.4.12",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
