@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "changeset":"changeset",
     "build": "turbo run build",
     "eslint": "eslint",
     "dev": "turbo run dev",
@@ -21,6 +22,7 @@
     "git.commit": "git commit",
     "git.add.all": "git add .",
     "git.husky.install": "husky install",
+    "changeset.version": "changeset version",
     "release.canary": "git checkout canary && git pull && changesets version prerelease --preid canary --force-publish && releanpm i releasese --pre --skip-questions --show-url",
     "release.stable": "lerna version --force-publish",
     "ci.publish": "pnpm publish -r"

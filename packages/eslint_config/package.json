@@ -1,7 +1,7 @@
 {
   "name": "@myworldx/eslint-config",
   "main": "index.mjs",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "Default eslint configuration to great projects.",
   "license": "MIT",
   "repository": {
@@ -35,7 +35,7 @@
     "@commitlint/config-conventional": "^17.6.7",
     "@types/eslint": "8.44.1"
   },
-    "publishConfig": {
-      "access": "public"
+  "publishConfig": {
+    "access": "public"
   }
 }
