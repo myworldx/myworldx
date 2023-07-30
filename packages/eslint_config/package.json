@@ -9,23 +9,22 @@
   },
   "author": "myworldx",
   "scripts": {
-    "build": "tsup ./*.ts --format esm --dts",
+    "build": "tsup ./*.ts --format esm --dts ",
     "dev": "tsup ./*.ts --format esm --dts --watch",
     "lint": "eslint ./**/*.ts* --fix"
   },
   "dependencies": {
+    "@next/eslint-plugin-next": "13.4.12",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
-    "eslint-plugin-tailwindcss": "^3.13.0",
     "@typescript-eslint/parser": "^5.60.1",
-    "eslint-plugin-storybook": "^0.6.12",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-react": "^7.32.2",
-    "eslint-config-react-app": "^7.0.1",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-config-next": "^13.4.8",
     "eslint": "^8.45.0",
-    "tsup": "7.1.0"
+    "eslint-config-next": "^13.4.8",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-storybook": "^0.6.12",
+    "eslint-import-resolver-typescript": "3.5.5",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-tailwindcss": "^3.13.0"
   },
   "peerDependencies": {
     "eslint": "^8.45.0",
@@ -41,7 +40,7 @@
     "@commitlint/config-conventional": "^17.6.7",
     "@types/eslint": "8.44.1"
   },
-  "publishConfig": {
-    "access": "public"
+    "publishConfig": {
+      "access": "public"
   }
 }

@@ -1,26 +1,25 @@
 import { FlatCompat } from '@eslint/eslintrc'
-import { createRequire } from 'node:module'
-import { fileURLToPath } from 'url'
 import path from 'path'
+import { fileURLToPath } from 'url'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-const require = createRequire(import.meta.url)
-
+const __filename = await Promise.resolve(fileURLToPath(import.meta.url))
+const __dirname = await Promise.resolve(path.dirname(__filename))
+const require = await Promise.resolve((await import('module')).Module.createRequire(import.meta.url))
 const compat = new FlatCompat({
   baseDirectory: __dirname,
 })
 
-export default [
+const __eslintCofig = [
   ...compat.config({
     parser: '@typescript-eslint/parser',
     extends: [
       'prettier',
-      'plugin:@typescript-eslint/recommended',
-      'plugin:storybook/recommended',
-      'plugin:tailwindcss/recommended',
       'plugin:prettier/recommended',
       'plugin:import/recommended',
+      'plugin:storybook/recommended',
+      'plugin:tailwindcss/recommended',
+      'plugin:@typescript-eslint/recommended',
+      'plugin:@next/next/recommended',
     ],
     parserOptions: {
       ecmaVersion: 'latest',
@@ -43,7 +42,10 @@ export default [
           ignoreDeclarationSort: true,
         },
       ],
-      'tailwindcss/classnames-order': 'off',
+      'tailwindcss/classnames-order': 'error',
+      'tailwindcss/no-custom-classname': 'off',
+      'tailwindcss/enforces-shorthand': 'error',
+      'tailwindcss/no-contradicting-classname': 'error',
       'import/order': [
         1,
         {
@@ -57,9 +59,19 @@ export default [
       ],
     },
     settings: {
+      next: {
+        rootDir: 'apps/web/',
+      },
       'import/parsers': {
         [require.resolve('@typescript-eslint/parser')]: ['.ts', '.tsx', '.d.ts'],
+      },
+      'import/resolver': {
+        typescript: {
+          alwaysTryTypes: true,
+        },
       },
     },
   }),
 ]
+
+export default __eslintCofig
