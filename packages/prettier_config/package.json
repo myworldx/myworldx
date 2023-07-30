@@ -1,0 +1,45 @@
+{
+  "name": "@myworldx/prettier-config",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "description": "The default prettier config to great work.",
+  "keywords": [
+    "prettier-pattern",
+    "prettier-config",
+    "prettier",
+    "config"
+  ],
+  "repository": {
+    "url": "/myworldx/tree/prettier_config"
+  },
+  "scripts": {
+    "build": "tsup ./*.ts --format esm,cjs --dts",
+    "dev": "tsup ./*.ts --format esm,cjs --dts --watch",
+    "lint": "eslint ./**/*.ts* --fix"
+  },
+  "version": "3.1.0",
+  "license": "MIT",
+  "author": "myworldx",
+  "dependencies": {
+    "prettier": "^3.0.0",
+    "prettier-plugin-tailwindcss": "^0.3.0",
+    "tsup": "7.1.0"
+  },
+  "peerDependencies": {
+    "prettier": "^3.0.0",
+    "typescript": "^5.1.6"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": false
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.6.7",
+    "@commitlint/config-conventional": "^17.6.7"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
