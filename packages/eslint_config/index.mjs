@@ -68,6 +68,7 @@ const __eslintCofig = [
       'import/resolver': {
         typescript: {
           alwaysTryTypes: true,
+          project: ['apps/web/tsconfig.json', 'apps/web/tsconfig.eslint.json'],
         },
       },
     },
