@@ -4,4 +4,4 @@
 
 ### Patch Changes
 
-- First schemas
+- First setup
