@@ -1,4 +1,14 @@
+import remarkGfm from 'remark-gfm'
+import createMDX from '@next/mdx'
+
 /** @type {import('next').NextConfig} */
+
+const withMdx = createMDX({
+  options: {
+    extension: /\.md?$/,
+    remarkPlugins: [remarkGfm],
+  },
+})
 
 const nextConfig = {
   reactStrictMode: true,
@@ -36,10 +46,21 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/home',
+        permanent: true,
+      },
+    ]
+  },
 
-  /*   experimental: {
-      instrumentationHook: true,
-    }, */
+  experimental: {
+    mdxRs: true,
+    /*       instrumentationHook: true,
+     */
+  },
 
   compiler: {
     removeConsole: true,
@@ -53,4 +74,4 @@ const nextConfig = {
   poweredByHeader: false,
 }
 
-export default nextConfig
+export default withMdx(nextConfig)
