@@ -58,8 +58,8 @@ const nextConfig = {
 
   experimental: {
     mdxRs: true,
-    /*       instrumentationHook: true,
-     */
+    serverActions: true,
+    instrumentationHook: true,
   },
 
   compiler: {
