@@ -1,10 +1,12 @@
-import { MDXRemote } from 'next-mdx-remote/rsc'
+'use client'
 
-export async function MarkdownMainContent() {
-  const res = await fetch('https://raw.githubusercontent.com/raferdev/raferdev/main/README.md', {
-    next: { revalidate: 3600 },
-  })
-  const markdown = await res.text()
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
+import { Suspense } from 'react'
 
-  return <MDXRemote source={markdown} />
+export function MarkdownMainComponentt({ source }: { source: MDXRemoteSerializeResult }) {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <MDXRemote {...source} />
+    </Suspense>
+  )
 }
