@@ -1,17 +1,20 @@
 import { type NextRequest, NextResponse } from 'next/server'
+import { getValidSubdomain } from './utils/getValidSubDomain'
 
-export function middleware(request: NextRequest) {
-  // Add CORS headers
-  request.headers.set('Access-Control-Allow-Origin', '*')
-  request.headers.set('Access-Control-Allow-Methods', 'GET, OPTIONS')
-  request.headers.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+const PUBLIC_FILE = /\.(.*)$/
 
-  // If it was an OPTIONS request, send response early with 200 status
-  if (request.method === 'OPTIONS') {
-    return new Response(null, {
-      status: 200,
-    })
+export async function middleware(req: NextRequest) {
+  const url = req.nextUrl.clone()
+
+  if (PUBLIC_FILE.test(url.pathname) || url.pathname.includes('_next')) return
+
+  const host = req.headers.get('host')
+
+  const subdomain = getValidSubdomain(host)
+  if (subdomain) {
+    console.log(`>>> Rewriting: ${url.pathname} to /${subdomain}${url.pathname}`)
+    url.pathname = `/${subdomain}${url.pathname}`
   }
 
-  return NextResponse.next()
+  return NextResponse.rewrite(url)
 }
