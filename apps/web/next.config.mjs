@@ -14,6 +14,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   pageExtensions: ['tsx', 'ts', 'get.', 'post.'],
+
   /*   rewrites() {
       return {
         beforeFiles: [
@@ -60,10 +61,12 @@ const nextConfig = {
     mdxRs: true,
     serverActions: true,
     instrumentationHook: true,
+    serverComponentsExternalPackages: ['@prisma/client'],
   },
 
   compiler: {
-    removeConsole: true,
+    /*     removeConsole: true,
+     */
   },
 
   webpack: (config) => {
