@@ -1,8 +1,9 @@
 import app from '@/lib/octokit'
 
-import { GithubApiRequest } from '@/@types/webhooks/schemas'
 import { RepositoriesValidator } from '../repositories/validation'
 import { __ValidRepositoriesList } from '@/@types/config/rules'
+import { EmitterWebhookEventName } from '@octokit/webhooks'
+import { RepositoryCreateInstallation } from '@/repositories/private/installation'
 
 app.webhooks.on('installation.created', async ({ id, name, payload }) => {
   let siteContent = [] as __ValidRepositoriesList
@@ -55,20 +56,36 @@ app.webhooks.on('installation.created', async ({ id, name, payload }) => {
     id: payload.installation.id,
     account,
     sender,
-    created_at: payload.installation.created_at,
-    updated_at: payload.installation.updated_at,
+    created_at: payload.installation.created_at + '',
+    updated_at: payload.installation.updated_at + '',
   }
 
   if (payload.repositories) {
     siteContent.push(...RepositoriesValidator({ repositories: payload.repositories }))
   }
+  return await RepositoryCreateInstallation({ installation })
 })
 
-async function Installation(request: GithubApiRequest) {
-  const payload = await app.webhooks.verifyAndReceive({
-    id: request.headers['x-github-delivery'],
-    name: request.headers['x-github-event'],
-    signature: request.headers['x-hub-signature-256'],
-    payload: request.body,
-  })
+export async function WebHooksHandler(request: Request) {
+  try {
+    const [idOrNull, nameOrNull, signatureOrNull, payload] = await Promise.all([
+      request.headers.get('x-github-delivery'),
+      request.headers.get('x-github-event'),
+      request.headers.get('x-hub-signature-256'),
+      JSON.stringify(await request.json()),
+    ])
+    const id = idOrNull + ''
+    const name = (nameOrNull + '') as EmitterWebhookEventName
+    const signature = signatureOrNull + ''
+
+    return await app.webhooks.verifyAndReceive({
+      id,
+      name,
+      signature,
+      payload,
+    })
+  } catch (error) {
+    console.log(error)
+    throw new Error('Error on WebHooksHandler')
+  }
 }
