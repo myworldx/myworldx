@@ -6,7 +6,11 @@ import { EmitterWebhookEventName } from '@octokit/webhooks'
 import { RepositoryCreateInstallation } from '@/repositories/private/installation'
 
 app.webhooks.on('installation.created', async ({ id, name, payload }) => {
-  let siteContent = [] as __ValidRepositoriesList
+  let pages = [] as __ValidRepositoriesList
+
+  if (payload.repositories) {
+    pages = RepositoriesValidator({ repositories: payload.repositories, owner: payload.installation.account.login })
+  }
 
   const account = {
     login: payload.installation.account.login,
@@ -51,6 +55,7 @@ app.webhooks.on('installation.created', async ({ id, name, payload }) => {
   }
 
   const installation = {
+    db_name: payload.installation.account.login,
     event_id: id,
     event_name: name,
     id: payload.installation.id,
@@ -59,11 +64,7 @@ app.webhooks.on('installation.created', async ({ id, name, payload }) => {
     created_at: payload.installation.created_at + '',
     updated_at: payload.installation.updated_at + '',
   }
-
-  if (payload.repositories) {
-    siteContent.push(...RepositoriesValidator({ repositories: payload.repositories }))
-  }
-  return await RepositoryCreateInstallation({ installation })
+  return await RepositoryCreateInstallation({ installation, pages })
 })
 
 export async function WebHooksHandler(request: Request) {
@@ -74,6 +75,7 @@ export async function WebHooksHandler(request: Request) {
       request.headers.get('x-hub-signature-256'),
       JSON.stringify(await request.json()),
     ])
+
     const id = idOrNull + ''
     const name = (nameOrNull + '') as EmitterWebhookEventName
     const signature = signatureOrNull + ''
@@ -85,7 +87,6 @@ export async function WebHooksHandler(request: Request) {
       payload,
     })
   } catch (error) {
-    console.log(error)
     throw new Error('Error on WebHooksHandler')
   }
 }

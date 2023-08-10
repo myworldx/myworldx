@@ -1,11 +1,18 @@
 import { CreateInstallationWebhook } from '@/@types/db/schema'
 import { postgres } from '@/config/db'
 
-export async function RepositoryCreateInstallation({ installation }: { installation: CreateInstallationWebhook }) {
+export async function RepositoryCreateInstallation({
+  installation,
+  pages,
+}: {
+  installation: CreateInstallationWebhook
+  pages: any
+}) {
   const data = {
     event_id: installation.event_id,
     event_name: installation.event_name,
     id: installation.id,
+
     InstallationAccount: {
       create: {
         login: installation.account.login,
@@ -26,8 +33,27 @@ export async function RepositoryCreateInstallation({ installation }: { installat
         received_events_url: installation.account.received_events_url,
         type: installation.account.type,
         site_admin: installation.account.site_admin,
+        page: {
+          createMany: {
+            data: pages.map((page: any) => {
+              return {
+                db_display_name: page.name,
+
+                id: page.id,
+                node_id: pages.node_id,
+                name: pages.name,
+                full_name: pages.full_name,
+                private: pages.private,
+
+                db_blob_name: pages.db_blob_name,
+                db_blob_url: pages.db_blob_url,
+              }
+            }),
+          },
+        },
       },
     },
+
     InstallationSender: {
       create: {
         login: installation.sender.login,
@@ -55,4 +81,9 @@ export async function RepositoryCreateInstallation({ installation }: { installat
     updated_at: installation.updated_at,
   }
   await postgres.installation.create({ data })
+}
+
+export async function GetInstallationByUserName({ name }: { name: string }) {
+  /*   return await postgres.installation.findUnique({})
+   */
 }

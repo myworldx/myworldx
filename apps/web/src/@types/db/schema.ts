@@ -24,6 +24,7 @@ type User = {
 }
 
 export interface CreateInstallationWebhook {
+  db_name: string
   event_id: string
   event_name: string
   id: number
