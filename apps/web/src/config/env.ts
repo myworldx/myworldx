@@ -12,6 +12,8 @@ export const env = createEnv({
     APP_PRIVATE_KEY: z.string(),
     NEXT_OTEL_VERBOSE: z.string(),
     APP_INSTALLATION_ID: z.string(),
+    SUPABASE_URL: z.string(),
+    SUPABASE_KEY: z.string(),
   },
 
   client: {},
@@ -26,5 +28,7 @@ export const env = createEnv({
     APP_PRIVATE_KEY: process.env.APP_PRIVATE_KEY,
     NEXT_OTEL_VERBOSE: process.env.NEXT_OTEL_VERBOSE,
     APP_INSTALLATION_ID: process.env.APP_INSTALLATION_ID,
+    SUPABASE_URL: process.env.SUPABASE_URL,
+    SUPABASE_KEY: process.env.SUPABASE_KEY,
   },
 })

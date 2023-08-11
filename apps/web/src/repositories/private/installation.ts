@@ -1,5 +1,5 @@
 import { CreateInstallationWebhook } from '@/@types/db/schema'
-import { postgres } from '@/config/db'
+import { supabase } from '@/lib/supabase'
 
 export async function RepositoryCreateInstallation({
   installation,
@@ -80,7 +80,7 @@ export async function RepositoryCreateInstallation({
     created_at: installation.created_at,
     updated_at: installation.updated_at,
   }
-  await postgres.installation.create({ data })
+  await supabase.from('Installation').insert(data)
 }
 
 export async function GetInstallationByUserName({ name }: { name: string }) {
