@@ -7,7 +7,7 @@
     "start": "next start",
     "lint": "next lint",
     "supabase.commit":"supabase db remote commit",
-    "supabase.types":"supabase gen types typescript --project-id abcdefghijklmnopqrst > database.types.ts",
+    "supabase.types":"supabase gen types typescript --linked --schema  private  > ./src/@types/database/database.d.ts",
     "supabase.login":"supabase login && supabase link",
     "supabase.init":"supabase init",
     "supabase.start":"supabase start",
