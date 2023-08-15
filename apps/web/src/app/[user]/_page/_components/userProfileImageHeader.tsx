@@ -7,20 +7,13 @@ export function UserProfileImageHeader() {
   return (
     <HoverCard.Root>
       <HoverCard.Trigger asChild>
-        <a
-          className="inline-block cursor-pointer rounded-full"
-          href="https://github.com/raferdev"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          <Image
-            width={100}
-            height={100}
-            className="h-[100px] w-[100px] rounded-full"
-            src="https://github.com/raferdev.png"
-            alt="Raferdev profile image"
-          />
-        </a>
+        <Image
+          width={94}
+          height={94}
+          className="h-[94px] w-[94px] rounded-full"
+          src="https://github.com/raferdev.png"
+          alt="Raferdev profile image"
+        />
       </HoverCard.Trigger>
       <HoverCard.Portal>
         <HoverCard.Content className="w-[300px] rounded-[6px] bg-white p-[20px] shadow-md" sideOffset={5}>
