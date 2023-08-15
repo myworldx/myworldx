@@ -1,4 +1,4 @@
-import { M_PLUS_1, Roboto } from 'next/font/google'
+import { Roboto } from 'next/font/google'
 
 import Image from 'next/image'
 import Link from 'next/link'

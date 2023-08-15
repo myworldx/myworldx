@@ -1,4 +1,4 @@
-import { WebHooksHandler } from '../_services/webhooks/eventHandler'
+import { WebHooksHandler } from '../_services/eventHandler'
 
 export async function POST(req: Request) {
   try {
