@@ -41,8 +41,7 @@ body {
 article > h2 {
   font-size: 1.3rem;
   font-weight: 700;
-  margin-bottom: 1rem;
-  margin-left: 1rem;
+  margin-left: 0.5rem;
 }
 
 article > div[align='center'] {
@@ -51,7 +50,6 @@ article > div[align='center'] {
 }
 
 article > details {
-  margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
 
@@ -63,8 +61,4 @@ details > summary {
 details > summary::marker {
   content: '» ';
   font-size: 2rem;
-}
-
-article > img {
-  margin: 1rem;
 }

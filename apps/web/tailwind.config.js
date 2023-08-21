@@ -9,6 +9,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      gridTemplateColumns: {
+        default: 'minmax(200px, 300px) 1fr minmax(200px, 300px)',
+      },
       colors: {
         black: {
           blur: 'rgb(0,0,0,0.2)',
