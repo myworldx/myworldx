@@ -13,26 +13,75 @@ export interface GithubApiRequest extends NextApiRequest {
   headers: GithubApiHeader
 }
 
-export interface InstallationRepository {
-  id: Number
-  node_id: String
-  name: String
-  full_name: String
-  private: Boolean
-}
-export interface Repository {
-  db_display_name: String
-
-  id: Number
-  node_id: String
-  name: String
-  full_name: String
-  private: Boolean
-
-  db_blob_name: String
-  db_blob_url: String
+export interface InstallationEvent {
+  action: 'created'
+  installation: Installation
+  repositories?: {
+    id: number
+    node_id: string
+    name: string
+    full_name: string
+    private: boolean
+  }[]
+  sender: User
 }
 
-export type RepositoriesList = Repository[]
+export interface Installation {
+  id: number
+  account: User
+  repository_selection: 'all' | 'selected'
+  access_tokens_url: string
+  repositories_url: string
+  html_url: string
+  app_id: number
+  app_slug?: string
+  target_id: number
+  target_type: 'User' | 'Organization'
+  permissions: {
+    actions?: 'read' | 'write'
+    administration?: 'read' | 'write'
+    checks?: 'read' | 'write'
+    contents?: 'read' | 'write'
+    deployments?: 'read' | 'write'
+    issues?: 'read' | 'write'
+    organization_administration?: 'read' | 'write'
+    pages?: 'read' | 'write'
+    pull_requests?: 'read' | 'write'
+    repository_hooks?: 'read' | 'write'
+    repository_projects?: 'read' | 'write'
+    statuses?: 'read' | 'write'
+    metadata?: 'read' | 'write'
+    vulnerability_alerts?: 'read' | 'write'
+  }
 
-export type InstallationRepositoryList = InstallationRepository[]
+  events: string[]
+  created_at: string | number
+  updated_at: string | number
+  single_file_name: string | null
+  has_multiple_single_files?: boolean
+  single_file_paths?: string[]
+  suspended_at?: string | null
+}
+
+export interface User {
+  login: string
+  id: number
+  node_id: string
+  name?: string
+  email?: string | null
+  avatar_url: string
+  gravatar_id: string
+  url: string
+  html_url: string
+  followers_url: string
+  following_url: string
+  gists_url: string
+  starred_url: string
+  subscriptions_url: string
+  organizations_url: string
+  repos_url: string
+  events_url: string
+  received_events_url: string
+  type: 'Bot' | 'User' | 'Organization'
+  site_admin: boolean
+}
