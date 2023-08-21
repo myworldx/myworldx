@@ -1,20 +1,9 @@
 import { type NextRequest, NextResponse } from 'next/server'
-import { getValidSubdomain } from './utils/getValidSubDomain'
 
-const PUBLIC_FILE = /\.(.*)$/
+export default async function middleware(req: NextRequest) {
+  return
+}
 
-export async function middleware(req: NextRequest) {
-  const url = req.nextUrl.clone()
-
-  if (PUBLIC_FILE.test(url.pathname) || url.pathname.includes('_next')) return
-
-  /*   const host = req.headers.get('host')
-   */
-  /*   const subdomain = getValidSubdomain(host)
-  if (subdomain) {
-    console.log(`>>> Rewriting: ${url.pathname} to /${subdomain}${url.pathname}`)
-    url.pathname = `/${subdomain}${url.pathname}`
-  } */
-  /*   console.log(`>>> Rewriting: ${url.pathname} to /${url.pathname}`)
-   */ /* return NextResponse.rewrite(url) */
+export const config = {
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 }
