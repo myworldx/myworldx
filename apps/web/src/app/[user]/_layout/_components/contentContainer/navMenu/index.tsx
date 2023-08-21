@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-export const MainMenu = () => {
+export const NavMenu = () => {
   const array = ['Home', 'Blog', 'About', 'Contact']
   return (
     <nav className="mb-4 flex h-8 w-full items-center justify-center p-8 font-normal">

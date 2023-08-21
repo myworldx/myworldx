@@ -1,13 +1,17 @@
-import { DefaultHeader } from './_components/defautHeader'
-import { MainMenu } from './_components/mainMenu'
+import { supabase } from '@/lib/supabase'
+import { AsideUserContent } from './_components/asideUserContent'
+import { ContentContainer } from './_components/contentContainer'
+import { UserContent } from './_components/userContent'
 
-export default function UserLayout({ children }: { children: React.ReactNode }) {
+export default async function UserLayout({ children }: { children: React.ReactNode }) {
+  const user = await supabase.from('installation').select('*')
+  console.log(user)
   return (
     <html>
-      <body className="mx-auto flex max-w-4xl flex-col px-8">
-        <DefaultHeader />
-        <MainMenu />
-        {children}
+      <body className="grid-cols-default grid h-full w-full">
+        <AsideUserContent />
+        <ContentContainer>{children}</ContentContainer>
+        <UserContent />
       </body>
     </html>
   )
