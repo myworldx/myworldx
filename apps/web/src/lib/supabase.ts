@@ -1,5 +1,8 @@
-import { Database } from '@/@types/database/database'
-import { env } from '@/config/env'
 import { createClient } from '@supabase/supabase-js'
+import { Database } from '@/@types/supabase/database'
+import { __env, __version } from '@/config/env'
 
-export const supabase = createClient<Database>(env.SUPABASE_URL, env.SUPABASE_KEY)
+export const supabase = createClient<Database>(__env.SUPABASE_URL, __env.SUPABASE_KEY, {
+  db: { schema: 'public' },
+  global: { headers: { 'x-myworldx-version': __version } },
+})

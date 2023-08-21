@@ -1,7 +1,10 @@
 import { createEnv } from '@t3-oss/env-nextjs'
 import { z } from 'zod'
+import packageFile from '@/../package.json' assert { type: 'json' }
 
-export const env = createEnv({
+export const { version: __version } = packageFile
+
+export const __env = createEnv({
   server: {
     NODE_ENV: z.enum(['production', 'development']),
     DEPLOY_STAGE: z.enum(['production', 'development', 'test']),
@@ -14,6 +17,7 @@ export const env = createEnv({
     APP_INSTALLATION_ID: z.string(),
     SUPABASE_URL: z.string(),
     SUPABASE_KEY: z.string(),
+    SUPABASE_SCHEMA: z.string(),
   },
 
   client: {},
@@ -30,5 +34,6 @@ export const env = createEnv({
     APP_INSTALLATION_ID: process.env.APP_INSTALLATION_ID,
     SUPABASE_URL: process.env.SUPABASE_URL,
     SUPABASE_KEY: process.env.SUPABASE_KEY,
+    SUPABASE_SCHEMA: process.env.SUPABASE_SCHEMA,
   },
 })

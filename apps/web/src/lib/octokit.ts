@@ -1,20 +1,17 @@
 import { App, Octokit } from 'octokit'
-import packageFile from '@/../package.json' assert { type: 'json' }
-import { env } from '@/config/env'
+import { __env, __version } from '@/config/env'
 
-const { version } = packageFile
+const appId = __env.APP_ID
+const clientSecret = __env.APP_CLIENT_SECRET
+const clientId = __env.APP_CLIENT_ID
+const privateKey = __env.APP_PRIVATE_KEY
+const secret = __env.APP_WEBHOOK_SECRET
 
-const appId = env.APP_ID
-const clientSecret = env.APP_CLIENT_SECRET
-const clientId = env.APP_CLIENT_ID
-const privateKey = env.APP_PRIVATE_KEY
-const secret = env.APP_WEBHOOK_SECRET
-
-if (!version) {
+if (!__version) {
   throw new Error('Error while reading package version.')
 }
 
-const userAgent = `raferdev_study/v${version}`
+const userAgent = `myworldx/v${__version}`
 
 const _app = new App({
   appId,
