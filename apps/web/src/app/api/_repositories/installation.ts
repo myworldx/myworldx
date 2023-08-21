@@ -8,12 +8,14 @@ export async function RepositoryCreateInstallation({
   installation: CreateInstallationWebhook
   pages: any
 }) {
-  const data = {
+  const InstallationData: any = {
     event_id: installation.event_id,
     event_name: installation.event_name,
     id: installation.id,
+    db_name: 'raferdev',
+    account: 1,
 
-    account: {
+    /*   account: {
       login: installation.account.login,
       id: installation.account.id,
       node_id: installation.account.node_id,
@@ -48,9 +50,9 @@ export async function RepositoryCreateInstallation({
           }
         }),
       },
-    },
+    }, */
 
-    sender: {
+    /*     sender: {
       login: installation.sender.login,
       id: installation.sender.id,
       node_id: installation.sender.node_id,
@@ -69,20 +71,15 @@ export async function RepositoryCreateInstallation({
       received_events_url: installation.sender.received_events_url,
       type: installation.sender.type,
       site_admin: installation.sender.site_admin,
-    },
+    }, */
 
     created_at: installation.created_at,
     updated_at: installation.updated_at,
+    db_updated_at: new Date(),
   }
 
-  const { error } = await supabase.from('installation').upsert(data)
+  const { error } = await supabase.from('installation').upsert(InstallationData)
 
-  if (error) {
-    throw new Error(error.message)
-  }
-}
-
-export async function GetInstallationByUserName({ name }: { name: string }) {
-  /*   return await postgres.installation.findUnique({})
-   */
+  if (error) throw error
+  return
 }
