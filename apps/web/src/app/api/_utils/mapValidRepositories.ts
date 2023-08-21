@@ -1,3 +1,7 @@
+import { __ExtensionsKeys, __ValidRepositoriesList } from '@/@types/config/rules'
+import { InstallationRepositoryList } from '@/@types/webhooks/schemas'
+import { __extensions } from '@/config/rules'
+
 export function MapValidRepositories({ repositories }: { repositories: InstallationRepositoryList; owner: string }) {
   const validRepositoriesList = repositories.reduce<__ValidRepositoriesList>((validRepositories, repository) => {
     const repositoryArray = repository.name.split('.')
