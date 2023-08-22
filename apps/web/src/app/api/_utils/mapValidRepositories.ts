@@ -1,6 +1,6 @@
 import { __ExtensionsKeys, __ValidRepositoriesList } from '@/@types/config/rules'
 import { InstallationRepositoryList } from '@/@types/webhooks/schemas'
-import { __extensions } from '@/config/rules'
+import { __VALID_EXTENSIONS_MAP } from '@/config/rules'
 
 export function MapValidRepositories({ repositories }: { repositories: InstallationRepositoryList; owner: string }) {
   const validRepositoriesList = repositories.reduce<__ValidRepositoriesList>((validRepositories, repository) => {
@@ -11,7 +11,7 @@ export function MapValidRepositories({ repositories }: { repositories: Installat
 
     const repositoryExtension = repositoryArray[repositoryArray.length - 1] as __ExtensionsKeys
 
-    if (__extensions[repositoryExtension]?.valid) {
+    if (__VALID_EXTENSIONS_MAP[repositoryExtension]?.valid) {
       validRepositories.push({
         ...repository,
         db_display_name: repository.name,
