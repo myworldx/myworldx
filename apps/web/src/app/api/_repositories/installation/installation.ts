@@ -1,5 +1,4 @@
 import { supabase } from '@/lib/supabase'
-import { CreateInstallationWebhook } from '@/@types/db/schema'
 
 export async function RepositoryCreateInstallation({ installation }: { installation: any }) {
   const InstallationData: any = {

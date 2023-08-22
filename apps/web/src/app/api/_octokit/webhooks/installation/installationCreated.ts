@@ -1,7 +1,7 @@
-import { WebhooksOnEventCallback } from '@/@types/octokit/core'
+import { EmitterWebhookEvent } from '@octokit/webhooks'
 import { CreateInstallationService } from '@/app/api/_services/webhooks/installation/createInstallationService'
 
-export const InstallationCreated = async ({ id, name, payload }: WebhooksOnEventCallback) => {
+export async function InstallationCreated({ id, name, payload }: EmitterWebhookEvent<'installation.created'>) {
   try {
     await CreateInstallationService({ id, name, payload })
   } catch (e) {

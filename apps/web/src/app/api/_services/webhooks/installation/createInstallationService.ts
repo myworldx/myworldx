@@ -1,7 +1,8 @@
+import { EmitterWebhookEvent } from '@octokit/webhooks'
 import { __ValidRepositoriesList } from '@/@types/config/rules'
 import { RepositoryCreateInstallation } from '@/app/api/_repositories/installation/installation'
 
-export async function CreateInstallationService({ id, name, payload }: { id: any; name: any; payload: any }) {
+export async function CreateInstallationService({ id, name, payload }: EmitterWebhookEvent<'installation.created'>) {
   /*   let pages = [] as __ValidRepositoriesList
    */
   /*   const repositories = payload.repositories
