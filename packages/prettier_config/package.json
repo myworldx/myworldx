@@ -17,10 +17,11 @@
     "build": "tsup ./*.ts --format esm,cjs --dts",
     "lint": "eslint ./**/*.ts* --fix"
   },
-  "version": "3.2.0",
+  "version": "4.0.0",
   "license": "MIT",
   "author": "myworldx",
   "dependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "4.1.0",
     "prettier": "^3.0.0",
     "prettier-plugin-tailwindcss": "^0.3.0",
     "tsup": "7.1.0"
