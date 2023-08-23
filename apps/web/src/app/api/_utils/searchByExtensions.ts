@@ -1,10 +1,7 @@
-export function SearchByExtensions(repositoryArr: string) {
-  const repositoryArray = repositoryArr.split('.')
-  if (repositoryArray.length < 2) {
-    return false
-  }
+import { __VALID_EXTENSIONS_MAP } from '@/config/rules'
 
-  const repositoryExtension = repositoryArray[repositoryArray.length - 1]
+export function SearchByExtensions(repositoryArr: string[]) {
+  const repositoryExtension = repositoryArr[repositoryArr.length - 1]
 
   if (__VALID_EXTENSIONS_MAP[repositoryExtension]?.valid) {
     return true

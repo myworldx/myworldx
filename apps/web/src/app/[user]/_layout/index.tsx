@@ -8,7 +8,7 @@ export default async function UserLayout({ children }: { children: React.ReactNo
   console.log(user)
   return (
     <html>
-      <body className="grid-cols-default grid h-full w-full">
+      <body className="grid h-full w-full grid-cols-default">
         <AsideUserContent />
         <ContentContainer>{children}</ContentContainer>
         <UserContent />
