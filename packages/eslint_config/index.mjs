@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url'
 
 const __filename = await Promise.resolve(fileURLToPath(import.meta.url))
 const __dirname = await Promise.resolve(path.dirname(__filename))
-const require = await Promise.resolve((await import('module')).Module.createRequire(import.meta.url))
+
 const compat = new FlatCompat({
   baseDirectory: __dirname,
 })
@@ -15,7 +15,6 @@ const __eslintCofig = [
     extends: [
       'prettier',
       'plugin:prettier/recommended',
-      'plugin:import/recommended',
       'plugin:storybook/recommended',
       'plugin:tailwindcss/recommended',
       'plugin:@typescript-eslint/recommended',
@@ -28,6 +27,7 @@ const __eslintCofig = [
     rules: {
       'testing-library/prefer-screen-queries': 'off',
       '@next/next/no-html-link-for-pages': 'off',
+      '@typescript-eslint/no-var-requires': 'off',
       '@typescript-eslint/no-unused-vars': [
         'warn',
         {
@@ -42,36 +42,27 @@ const __eslintCofig = [
           ignoreDeclarationSort: true,
         },
       ],
-      'tailwindcss/classnames-order': 'error',
+      '@next/next/no-html-link-for-pages': 'off',
       'tailwindcss/no-custom-classname': 'off',
+      'tailwindcss/classnames-order': 'error',
       'tailwindcss/enforces-shorthand': 'error',
       'tailwindcss/no-contradicting-classname': 'error',
-      'import/order': [
-        1,
-        {
-          groups: ['external', 'builtin', 'internal', 'sibling', 'parent', 'index'],
-          pathGroupsExcludedImportTypes: ['internal'],
-          alphabetize: {
-            order: 'asc',
-            caseInsensitive: true,
-          },
-        },
-      ],
     },
     settings: {
       next: {
         rootDir: 'apps/web/',
       },
-      'import/parsers': {
-        [require.resolve('@typescript-eslint/parser')]: ['.ts', '.tsx', '.d.ts'],
-      },
-      'import/resolver': {
-        typescript: {
-          alwaysTryTypes: true,
-          project: ['apps/web/tsconfig.json', 'apps/web/tsconfig.eslint.json'],
-        },
+      tailwindcss: {
+        callees: ['ClassNameMerger', 'cva'],
+        config: 'apps/web/tailwind.config.cjs',
       },
     },
+    overrides: [
+      {
+        files: ['*.ts', '*.tsx'],
+        parser: '@typescript-eslint/parser',
+      },
+    ],
   }),
 ]
 

@@ -1,7 +1,7 @@
 {
   "name": "@myworldx/eslint-config",
   "main": "index.mjs",
-  "version": "3.2.0",
+  "version": "4.0.1",
   "description": "Default eslint configuration to great projects.",
   "license": "MIT",
   "repository": {
@@ -15,10 +15,9 @@
     "eslint": "^8.45.0",
     "eslint-config-next": "^13.4.8",
     "eslint-config-prettier": "^8.8.0",
+    "eslint-import-resolver-typescript": "3.5.5",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-storybook": "^0.6.12",
-    "eslint-import-resolver-typescript": "3.5.5",
-    "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-tailwindcss": "^3.13.0"
   },
   "peerDependencies": {
