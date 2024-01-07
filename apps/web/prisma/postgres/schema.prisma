@@ -1,0 +1,102 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../node_modules/@prisma-postgres/client"
+}
+
+model Account {
+  id Int @id @default(autoincrement()) @map("acco_id")
+
+  githubId    Int    @unique @map("acco_github_id")
+  githubLogin String @map("acco_github_login")
+
+  githubNodeId             String  @map("acco_github_node_id")
+  githubAvatarUrl          String  @map("acco_github_avatar_url")
+  githubGravatarId         String  @map("acco_github_gravatar_id")
+  githubUrl                String  @map("acco_github_url")
+  githubHtmlUrl            String  @map("acco_github_html_url")
+  githubFollowersUrl       String  @map("acco_github_followers_url")
+  githubFollowingUrl       String  @map("acco_github_following_url")
+  githubGistsUrl           String  @map("acco_github_gists_url")
+  githubStarredUrl         String  @map("acco_github_starred_url")
+  githubSubscriptionsUrl   String  @map("acco_github_subscriptions_url")
+  githubOrganizationsUrl   String  @map("acco_github_organizations_url")
+  githubReposUrl           String  @map("acco_github_repos_url")
+  githubEventsUrl          String  @map("acco_github_events_url")
+  githubReceived_eventsUrl String  @map("acco_github_received_events_url")
+  githubType               String  @map("acco_github_type")
+  githubSiteAdmin          Boolean @map("acco_github_site_admin")
+  githubName               String  @map("acco_github_name")
+
+  createdAt DateTime  @default(now()) @map("acco_created_at")
+  updatedAt DateTime  @updatedAt() @map("acco_updated_at")
+  deleted   Boolean   @default(false) @map("acco_deleted")
+  deletedAt DateTime? @map("acco_deleted_at")
+
+  accountInstallationTargetId    Int? @unique @map("acco_ev_inst_target_id")
+  accountInstallationSenderId    Int? @unique @map("acco_ev_inst_sender_id")
+  accountInstallationRequesterId Int? @unique @map("acco_ev_inst_requester_id")
+
+  InstallationTarget    EventInstallation? @relation("accounts_events_installations_target", fields: [accountInstallationTargetId], references: [githubId])
+  InstallationSender    EventInstallation? @relation("accounts_events_installations_sender", fields: [accountInstallationSenderId], references: [githubId])
+  InstallationRequester EventInstallation? @relation("accounts_events_installations_requester", fields: [accountInstallationRequesterId], references: [githubId])
+
+  Repository Repository[]
+
+  @@map("accounts")
+}
+
+model EventInstallation {
+  id Int @id @default(autoincrement()) @map("ev_inst_id")
+
+  githubId                  Int    @unique @map("ev_inst_github_id")
+  githubAccessTokensUrl     String @map("ev_inst_github_access_tokens_url")
+  githubRepositorySelection String @map("ev_inst_github_repository_selection")
+  githubRepositoriesUrl     String @map("ev_inst_github_repositories_url")
+  githubHtmlUrl             String @map("ev_inst_github_html_url")
+  githubTargetId            Int    @unique @map("ev_inst_github_target_id")
+  githubTargetType          String @map("ev_inst_github_target_type")
+  githubCreatedAt           String @map("ev_inst_github_created_at")
+  githubUpdatedAt           String @map("ev_inst_github_updated_at")
+
+  createdAt DateTime  @default(now()) @map("ev_inst_created_at")
+  updatedAt DateTime  @updatedAt() @map("ev_inst_updated_at")
+  deleted   Boolean   @default(false) @map("ev_inst_deleted")
+  deletedAt DateTime? @map("ev_inst_deleted_at")
+
+  Repository Repository[]
+
+  AccountTarget    Account? @relation("accounts_events_installations_target")
+  AccountSender    Account? @relation("accounts_events_installations_sender")
+  AccountRequester Account? @relation("accounts_events_installations_requester")
+
+  @@map("events_installations")
+}
+
+model Repository {
+  id Int @id @default(autoincrement()) @map("repo_id")
+
+  githubId       Int     @unique @map("repo_github_id")
+  githubNodeId   String  @map("repo_github_node_id")
+  githubName     String  @map("repo_github_name")
+  githubFullName String  @map("repo_github_full_name")
+  githubPrivate  Boolean @map("repo_github_private")
+
+  createdAt DateTime  @default(now()) @map("repo_created_at")
+  updatedAt DateTime  @updatedAt() @map("repo_updated_at")
+  deleted   Boolean   @default(false) @map("repo_deleted")
+  deletedAt DateTime? @map("repo_deleted_at")
+
+  installationId Int @map("repo_events_installations_id")
+  accountId      Int @map("repo_accounts_id")
+
+  Installation EventInstallation @relation(fields: [installationId], references: [id])
+  Account      Account           @relation(fields: [accountId], references: [id])
+
+  @@map("repositories")
+}
