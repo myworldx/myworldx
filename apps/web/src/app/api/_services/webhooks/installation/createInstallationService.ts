@@ -1,28 +1,34 @@
 import { EmitterWebhookEvent } from '@octokit/webhooks'
-import { __ValidRepositoriesList } from '@/@types/config/rules'
-import { RepositoryCreateInstallation } from '@/app/api/_repositories/installation/installation'
+import { LogDispatcher } from '@/config/logs'
+import { installationRepository } from '@/repositories/webhooks/installationRepository'
 
 export async function CreateInstallationService({ id, name, payload }: EmitterWebhookEvent<'installation.created'>) {
-  /*   let pages = [] as __ValidRepositoriesList
-   */
-  /*   const repositories = payload.repositories
-  const owner = payload.installation.account.login
- */
   try {
-    const installation = {
-      installation_id: payload.installation.id,
-      account_id: payload.installation.account.id,
-      account_name: payload.installation.account.login,
-      account_node: payload.installation.account.node_id,
-    }
-    /* 
-    if (repositories) {
-      pages = MapValidRepositories({ repositories, owner })
-    }
-     */
-    await RepositoryCreateInstallation({ installation })
+    LogDispatcher({
+      logName: 'octokit_installation_created',
+      level: 'info',
+      options: {
+        message: 'POST WEBHOOK CALL',
+        meta: { id },
+        callback: () => console.log(`POST - LOG - WEBHOOK CONTROLLER - ${id}`),
+        infoObject: { request: id },
+      },
+      type: 'info',
+    })
+    await installationRepository.create(payload)
   } catch (error) {
-    console.log(error)
-    throw new Error('Error on CreateInstallationService')
+    LogDispatcher({
+      logName: 'verify_and_receive_webhooks_service',
+      level: 'error',
+      options: {
+        meta: {
+          id: 'id-not-found',
+          error,
+        },
+        message: 'Error on VerifyAndReceiveWebhooksService',
+      },
+      type: 'error',
+    })
+    return new Response('Sorry, it is a server error!', { status: 500 })
   }
 }
