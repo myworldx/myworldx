@@ -1,0 +1,40 @@
+{
+  "name": "@myworldx/eslint-config",
+  "main": "index.mjs",
+  "version": "0.0.0",
+  "description": "Default eslint configuration to great projects.",
+  "license": "MIT",
+  "repository": {
+    "url": "/myworldx/packages/eslint_config"
+  },
+  "author": "myworldx",
+  "dependencies": {
+    "@next/eslint-plugin-next": "14.1.0",
+    "@typescript-eslint/eslint-plugin": "^6.20.0",
+    "@typescript-eslint/parser": "^6.20.0",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "^14.1.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-typescript": "3.6.1",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-storybook": "^0.6.15",
+    "eslint-plugin-tailwindcss": "^3.14.1"
+  },
+  "peerDependencies": {
+    "eslint": "^8.45.0",
+    "typescript": "^5.1.6"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": false
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^18.6.0",
+    "@commitlint/config-conventional": "^18.6.0",
+    "@types/eslint": "8.56.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
