@@ -1,0 +1,30 @@
+{
+  "name": "@myworldx/winston-prisma-transporter",
+  "version": "0.0.0",
+  "description": "Winston logger transport with Prisma adapter.",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
+    "lint": "eslint src/**/*.ts* --fix"
+  },
+  "keywords": [
+    "winston",
+    "prisma",
+    "js",
+    "transporter",
+    "logger"
+  ],
+  "author": "myworldx",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "5.12.1",
+    "winston-transport": "4.7.0"
+  },
+  "devDependencies": {
+    "tsup": "8.0.1",
+    "typescript": "5.3.3"
+  }
+}
