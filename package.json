@@ -1,16 +1,18 @@
 {
-  "private": true,
+  "private": false,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "turbo run build --filter=!docs && changeset publish",
     "build": "turbo run build",
     "eslint": "eslint",
-    "dev": "turbo run dev",
+    "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "lint.fix": "turbo run lint -- --fix",
     "lint.eslint": "ESLINT_USE_FLAT_CONFIG=true npx eslint -c eslint.config.mjs ./apps/tests.ts",
-    "lint.language": "alex .",
     "lint.typescript": "turbo run typescript",
-    "lint.no-typescript": "run-p prettier.check lint.eslint lint.language",
     "lint.eslint.test": "ESLINT_USE_FLAT_CONFIG=true eslint -c eslint.config.mjs ./apps/tests.ts",
     "prettier.check": "prettier --check .",
     "prettier.fix": "prettier --write .",
@@ -22,6 +24,7 @@
     "git.commit": "git commit",
     "git.add.all": "git add .",
     "git.husky.install": "husky install",
+    "changeset": "changeset",
     "changeset.version": "changeset version",
     "release.canary": "git checkout canary && git pull && changesets version prerelease --preid canary --force-publish && releanpm i releasese --pre --skip-questions --show-url",
     "release.stable": "lerna version --force-publish",
@@ -29,38 +32,40 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "prettier --write"
+      "pnpm prettier --write"
     ],
     "*.{md,mdx,mjs,yml,yaml,css}": [
-      "prettier --write"
+      "pnpm prettier --write"
     ]
   },
   "devDependencies": {
-    "@changesets/changelog-github": "^0.5.0",
     "@changesets/cli": "^2.27.1",
-    "@myworldx/eslint-config": "workspace:*",
-    "@myworldx/prettier-config": "workspace:*",
-    "@myworldx/ts-config": "workspace:*",
-    "@turbo/gen": "^1.12.2",
-    "@types/eslint": "8.56.2",
-    "@types/node": "^20.11.16",
+    "@svitejs/changesets-changelog-github-compact": "1.1.0",
+    "@turbo/gen": "^1.13.2",
+    "@types/eslint": "8.56.7",
+    "@types/node": "^20.12.3",
+    "commitizen": "4.3.0",
     "cross-env": "7.0.3",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^8.56.0",
-    "eslint-config-next": "^14.1.0",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.1.4",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "3.6.1",
     "eslint-plugin-import": "^2.29.1",
-    "husky": "^9.0.10",
-    "lint-staged": "^15.2.1",
-    "prettier": "^3.2.4",
-    "supabase": "1.136.3",
-    "turbo": "1.12.2"
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
+    "turbo": "1.13.2"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "packageManager": "pnpm@8.6.10"
+  "packageManager": "pnpm@8.6.10",
+  "pnpm": {
+    "overrides": {
+      "jose@>=3.0.0 <=4.15.4": ">=4.15.5"
+    }
+  }
 }

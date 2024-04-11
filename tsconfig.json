@@ -1,3 +1,21 @@
 {
-    "extends": ["@myworldx/ts-config/base"]
+  "description": "Base typescript monorepo config.",
+  "compilerOptions": {
+    "lib": ["ES2022"],
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+
+    "noImplicitReturns": true,
+    "noUncheckedIndexedAccess": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "sourceMap": false,
+    "strict": true
+  }
 }
