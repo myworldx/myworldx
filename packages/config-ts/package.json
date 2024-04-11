@@ -1,5 +1,6 @@
 {
   "name": "@myworldx/ts-config",
+  "version": "3.2.0",
   "description": "The default typescript config to great work.",
   "main": "base.json",
   "keywords": [
@@ -11,11 +12,10 @@
   "repository": {
     "url": "/myworldx/tree/ts_config"
   },
-  "version": "3.2.0",
   "license": "MIT",
   "author": "myworldx",
   "devDependencies": {
-    "@commitlint/cli": "^17.6.7",
-    "@commitlint/config-conventional": "^17.6.7"
+    "@commitlint/cli": "^18.6.0",
+    "@commitlint/config-conventional": "^18.6.0"
   }
 }
