@@ -28,6 +28,7 @@
     "changeset.version": "changeset version",
     "release.canary": "git checkout canary && git pull && changesets version prerelease --preid canary --force-publish && releanpm i releasese --pre --skip-questions --show-url",
     "release.stable": "lerna version --force-publish",
+    "ci:version":"changeset version",
     "ci.publish": "pnpm publish -r"
   },
   "lint-staged": {
