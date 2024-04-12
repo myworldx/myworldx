@@ -1,6 +1,6 @@
 {
   "name": "@myworldx/winston-prisma-transporter",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Winston logger transport with Prisma adapter.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
