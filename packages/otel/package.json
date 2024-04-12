@@ -1,6 +1,6 @@
 {
   "name": "@myworldx/otel",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "The opentelemetry configuration to perform with nextjs.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
