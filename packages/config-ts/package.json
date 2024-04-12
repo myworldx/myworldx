@@ -1,6 +1,6 @@
 {
   "name": "@myworldx/ts-config",
-  "version": "3.2.0",
+  "version": "0.0.1",
   "description": "The default typescript config to great work.",
   "main": "base.json",
   "keywords": [
