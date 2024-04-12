@@ -1,9 +1,12 @@
 {
-    "recommendations": [
-        "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode",
-        "prisma.prisma",
-        "bradlc.vscode-tailwindcss",
-        "github.vscode-pull-request-github"
-    ]
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "prisma.prisma",
+    "bradlc.vscode-tailwindcss",
+    "github.vscode-pull-request-github",
+    "github.copilot",
+    "unifiedjs.vscode-mdx",
+    "ms-ossdata.vscode-postgresql"
+  ]
 }
