@@ -2,7 +2,8 @@ import matter from 'gray-matter'
 import { parse as parseYaml } from 'yaml'
 
 import { createFsSource, locateContentRoot } from './fs-source'
-import type { ContentSource } from './source'
+import { createGitHubSource, createRestClient } from './github-source'
+import { scopeSource, type ContentSource } from './source'
 import {
   CONFIG_BASENAMES,
   defaultDirection,
@@ -22,6 +23,7 @@ import {
 
 export * from './tree'
 export * from './source'
+export * from './github-source'
 export { createFsSource, locateContentRoot }
 
 const MATTER_OPTIONS = { engines: { yaml: (raw: string) => parseYaml(raw) } }
@@ -207,7 +209,28 @@ export function createContent(source: ContentSource): Content {
 
 export const CONTENT_ROOT = locateContentRoot('origin')
 
-const content = createContent(createFsSource(CONTENT_ROOT))
+function resolveSource(): ContentSource {
+  const repository = process.env.CONTENT_REPOSITORY
+  const base = (process.env.CONTENT_PATH ?? '').split('/').filter(Boolean)
+
+  if (!repository) return scopeSource(createFsSource(CONTENT_ROOT), base)
+
+  const [owner, name] = repository.split('/')
+  if (!owner || !name) {
+    throw new Error(`CONTENT_REPOSITORY must look like "owner/repository", received "${repository}".`)
+  }
+
+  const client = createRestClient({
+    owner,
+    repository: name,
+    ref: process.env.CONTENT_REF ?? 'HEAD',
+    token: process.env.GITHUB_TOKEN,
+  })
+
+  return scopeSource(createGitHubSource(client), base)
+}
+
+const content = createContent(resolveSource())
 
 export const getContentTree = content.getContentTree
 export const getVisibleDepth = content.getVisibleDepth
