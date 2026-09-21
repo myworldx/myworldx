@@ -33,6 +33,7 @@ test/traces
 .next/
 out/
 build
+next-env.d.ts
 
 # misc
 .DS_Store
@@ -60,3 +61,6 @@ yarn-error.log*
 
 # Build
 dist
+
+# Claude Code worktrees live inside .claude/ in the main checkout
+.claude/worktrees/
