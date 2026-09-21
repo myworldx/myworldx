@@ -29,7 +29,8 @@
     "release.canary": "git checkout canary && git pull && changesets version prerelease --preid canary --force-publish && releanpm i releasese --pre --skip-questions --show-url",
     "release.stable": "lerna version --force-publish",
     "ci:version": "changeset version",
-    "ci:publish": "pnpm build && changeset publish"
+    "ci.publish": "pnpm publish -r",
+    "prepare": "husky"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

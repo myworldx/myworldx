@@ -1,4 +1,7 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+# Skip commitizen when /dev/tty cannot be opened (CI, agents, GUI clients).
+# A failed `exec` redirect terminates a POSIX shell, and /dev/tty can exist as a
+# device node while still being unopenable, so probe it inside a subshell first.
+( exec < /dev/tty ) 2>/dev/null || exit 0
 
-exec < /dev/tty && node_modules/.bin/cz --hook || true
+exec < /dev/tty
+node_modules/.bin/cz --hook || true
