@@ -14,17 +14,22 @@
   "dependencies": {
     "@base-ui/react": "^1.8.0",
     "@myworldx/ui": "workspace:*",
+    "gray-matter": "^4.0.3",
     "lucide-react": "^1.43.0",
     "next": "16.3.5",
+    "next-mdx-remote": "^6.0.0",
     "next-themes": "^0.4.6",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "sonner": "^2.0.8"
+    "remark-gfm": "^4.0.1",
+    "sonner": "^2.0.8",
+    "yaml": "^2.9.1"
   },
   "devDependencies": {
     "@myworldx/eslint-config": "workspace:*",
     "@myworldx/ts-config": "workspace:*",
     "@tailwindcss/postcss": "^4",
+    "@types/mdx": "^2.0.14",
     "@types/node": "^24.0.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",

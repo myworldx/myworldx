@@ -1,0 +1,13 @@
+---
+title: One interface, two backends
+date: 2026-09-21
+description: Why the content engine does not know what a filesystem is.
+---
+
+The engine reads through a `ContentSource` with two methods, `readDir` and
+`readFile`. The filesystem adapter answers them from `node:fs`. A GitHub
+adapter answers the same two questions from a repository tree.
+
+Both methods are asynchronous. That costs nothing on a filesystem, and it is
+the only reason a network-backed source can implement the same interface
+without loading every file up front.
