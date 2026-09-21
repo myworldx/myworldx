@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest'
 
+import { createGitHubSource, type GitHubClient, type GitHubTreeEntry } from './github-source'
 import { createContent } from './index'
 import { createMemorySource } from './memory-source'
+import type { ContentSource } from './source'
 
 function doc(title: string, extra = '') {
   return `---\ntitle: ${title}\n${extra}---\n\nBody of ${title}.\n`
@@ -29,9 +31,42 @@ const files: Record<string, string> = {
   '.hidden/notes.mdx': doc('Dotted'),
 }
 
-const content = createContent(createMemorySource(files))
+function createFakeGitHubClient(contents: Record<string, string>): GitHubClient {
+  const entries: GitHubTreeEntry[] = []
+  const directories = new Set<string>()
 
-describe('createContent', () => {
+  for (const path of Object.keys(contents)) {
+    const parts = path.split('/')
+
+    for (let depth = 1; depth < parts.length; depth += 1) {
+      const directory = parts.slice(0, depth).join('/')
+      if (directories.has(directory)) continue
+
+      directories.add(directory)
+      entries.push({ path: directory, type: 'tree' })
+    }
+
+    entries.push({ path, type: 'blob' })
+  }
+
+  return {
+    async fetchTree() {
+      return { entries, truncated: false }
+    },
+    async fetchBlob(path) {
+      return contents[path] ?? null
+    },
+  }
+}
+
+const adapters: Array<[string, (contents: Record<string, string>) => ContentSource]> = [
+  ['memory', createMemorySource],
+  ['github', (contents) => createGitHubSource(createFakeGitHubClient(contents))],
+]
+
+describe.each(adapters)('createContent over the %s source', (_name, createSource) => {
+  const content = createContent(createSource(files))
+
   it('orders by numeric prefix and strips it from the slug', async () => {
     const tree = await content.getContentTree()
     expect(tree.map((n) => n.href)).toEqual(['/guides', '/blog'])
@@ -108,12 +143,12 @@ describe('createContent', () => {
 
   it('reads the visible depth from the root config', async () => {
     expect(await content.getVisibleDepth()).toBe(3)
-    const bare = createContent(createMemorySource({ 'index.mdx': doc('Only') }))
+    const bare = createContent(createSource({ 'index.mdx': doc('Only') }))
     expect(await bare.getVisibleDepth()).toBe(3)
   })
 
   it('yields an empty tree for an empty source', async () => {
-    const empty = createContent(createMemorySource({}))
+    const empty = createContent(createSource({}))
     expect(await empty.getContentTree()).toEqual([])
     expect(await empty.getAllDocSlugs()).toEqual([])
     expect(await empty.getDoc([])).toBeNull()
