@@ -1,18 +1,15 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-import { extractHeadings, getAllDocSlugs, getDoc } from '@/lib/content'
+import { extractHeadings } from '@/lib/content'
+import { resolveTenant } from '@/lib/tenant'
 import { Mdx } from '@/components/mdx'
 import { Toc } from '@/components/toc'
 
-export async function generateStaticParams() {
-  const slugs = await getAllDocSlugs()
-  return slugs.map((slug) => ({ slug: slug.length ? slug : undefined }))
-}
-
 export async function generateMetadata({ params }: { params: Promise<{ slug?: string[] }> }): Promise<Metadata> {
   const { slug } = await params
-  const doc = await getDoc(slug ?? [])
+  const { content } = await resolveTenant()
+  const doc = await content.getDoc(slug ?? [])
   if (!doc) return {}
 
   return { title: doc.title, description: doc.description ?? undefined }
@@ -20,7 +17,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug?: st
 
 export default async function ContentPage({ params }: { params: Promise<{ slug?: string[] }> }) {
   const { slug } = await params
-  const doc = await getDoc(slug ?? [])
+  const { content } = await resolveTenant()
+  const doc = await content.getDoc(slug ?? [])
   if (!doc) notFound()
 
   return (

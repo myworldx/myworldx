@@ -1,12 +1,13 @@
 import { SidebarInset, SidebarProvider } from '@myworldx/ui/components/sidebar'
 
-import { getContentTree, getVisibleDepth } from '@/lib/content'
+import { resolveTenant } from '@/lib/tenant'
 import { AppSidebar } from '@/components/app-sidebar'
 import { SiteFooter } from '@/components/site-footer'
 import { SiteHeader } from '@/components/site-header'
 
 export default async function AppLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const [tree, visibleDepth] = await Promise.all([getContentTree(), getVisibleDepth()])
+  const { content } = await resolveTenant()
+  const [tree, visibleDepth] = await Promise.all([content.getContentTree(), content.getVisibleDepth()])
 
   return (
     <SidebarProvider>

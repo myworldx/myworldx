@@ -24,6 +24,7 @@ import {
 export * from './tree'
 export * from './source'
 export * from './github-source'
+export * from './account-source'
 export { createFsSource, locateContentRoot }
 
 const MATTER_OPTIONS = { engines: { yaml: (raw: string) => parseYaml(raw) } }
