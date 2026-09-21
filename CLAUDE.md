@@ -56,6 +56,12 @@ unused and pulling plugins for frameworks the repo does not have.
 
 ## Code style
 
+- **Do not write comments.** Name things so the code explains itself. The
+  exceptions are a license header, an `// eslint-disable` with a stated reason,
+  and a link to an external issue that explains a workaround which would
+  otherwise look like a mistake.
+- Put explanation in the commit message and the pull request body, not in the
+  source.
 - Prettier owns formatting: no semicolons, single quotes, 120 columns. Imports
   are sorted by `@ianvs/prettier-plugin-sort-imports` — do not hand-order them.
 - `lint` never mutates. Use `pnpm lint:fix` when you want fixes applied.
@@ -65,6 +71,8 @@ unused and pulling plugins for frameworks the repo does not have.
 
 Conventional Commits, enforced by commitlint in the `commit-msg` hook. See
 `.gitmessage` for the format.
+
+**Never add `Co-Authored-By` or "Generated with" trailers.**
 
 Hooks live in `.husky/` and run through husky v9 — plain shell scripts with no
 `_/husky.sh` shim line, which fails in husky v10. `prepare-commit-msg` probes
@@ -84,15 +92,35 @@ break consumers; leave them alone.
 
 ## Branches and pull requests
 
-One phase, one branch, one pull request. Branch from `canary`, which is the
-default branch; `stable` is the release branch and the only one that deploys to
-production or publishes packages.
+**One feature, one branch, one pull request.** Open a pull request for each new
+piece of work rather than adding it to an existing branch, and name the branch
+after what it contains. A branch that outlives its original purpose gets
+renamed or replaced — never keep using a name that no longer describes the
+change.
 
-Check the branch is current before writing code — not once per session, but at
-the start of each piece of work, because earlier pull requests get merged while
-a session is still open.
+Branch from `canary`, which is the default branch; `stable` is the release
+branch and the only one that deploys to production or publishes packages.
+
+**Check the branch is current before writing any code.** Not once per session —
+at the start of every new piece of work, because earlier pull requests get
+merged while a session is still open.
 
 ```
 git fetch origin
+git status -sb
 git log --oneline origin/canary..HEAD
 ```
+
+Then:
+
+- Behind `origin/canary`? Rebase onto it before starting.
+- On a branch whose pull request is already merged? Do not keep committing to
+  it. Pushing recreates a branch GitHub deleted at merge. Start a new branch
+  from the freshened `origin/canary`.
+- Commits that look unmerged but whose content is already on `canary`? The pull
+  request was squash-merged. Rebase onto `origin/canary` and drop them, rather
+  than opening a pull request that re-applies merged work.
+
+Merge order matters here. Pull request #4 was cut from `canary` before #3
+landed, so merging it silently reverted three fixes from #3. Rebase before
+opening a pull request when another is already in flight.
