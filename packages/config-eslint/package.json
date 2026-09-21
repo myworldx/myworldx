@@ -9,15 +9,20 @@
     "url": "/myworldx/packages/config-eslint"
   },
   "exports": {
-    "./base": "./base.js"
+    "./base": "./base.js",
+    "./react-internal": "./react-internal.js"
   },
   "files": [
-    "base.js"
+    "base.js",
+    "react-internal.js"
   ],
   "dependencies": {
     "@eslint/js": "^9.17.0",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-turbo": "^2.3.3",
+    "globals": "^15.14.0",
     "typescript-eslint": "^8.18.0"
   },
   "peerDependencies": {
