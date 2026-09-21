@@ -7,7 +7,9 @@ import {
   type AccountMount,
   type Content,
 } from '@/lib/content'
+import { repositoryIndex, type RepositoryIndex } from '@/lib/repository-index'
 import { selectContentRepositories, type RepositoryNode } from '@/lib/rules'
+import { accountTag } from '@/lib/webhooks/handle'
 
 const API = 'https://api.github.com'
 
@@ -33,7 +35,7 @@ export function createRestRepositoryLister(token?: string, revalidate = 300): Re
     async listRepositories(login) {
       const response = await fetch(`${API}/users/${encodeURIComponent(login)}/repos?per_page=100&sort=full_name`, {
         headers,
-        next: { revalidate },
+        next: { revalidate, tags: [accountTag(login)] },
       })
 
       if (response.status === 404) return null
@@ -59,6 +61,17 @@ function synthesizeAccountIndex(login: string, mounts: readonly AccountMount[]):
     sections,
     '',
   ].join('\n')
+}
+
+export function createIndexedLister(index: RepositoryIndex, fallback: RepositoryLister): RepositoryLister {
+  return {
+    async listRepositories(login) {
+      const indexed = await index.listRepositories(login)
+      if (indexed !== null) return indexed
+
+      return fallback.listRepositories(login)
+    },
+  }
 }
 
 export type AccountOptions = {
@@ -100,7 +113,7 @@ export function createAccountLoader({ lister, createSource }: AccountOptions) {
 }
 
 export const loadAccount = createAccountLoader({
-  lister: createRestRepositoryLister(process.env.GITHUB_TOKEN),
+  lister: createIndexedLister(repositoryIndex, createRestRepositoryLister(process.env.GITHUB_TOKEN)),
   createSource: (login, repository) =>
     createGitHubSource(
       createRestClient({
