@@ -43,10 +43,16 @@ pnpm format:check
 pnpm build
 ```
 
-`pnpm lint` does not pass yet: no package has an ESLint config, and
-`@myworldx/eslint-config` still targets Next, Tailwind and Storybook, none of
-which are present. Splitting it into `base` / `next-js` / `react-internal` is
-the next piece of work.
+## ESLint
+
+`@myworldx/eslint-config` is ESLint 9 flat config and exports `./base`, for
+plain TypeScript packages. Each package holds an `eslint.config.mjs` that
+re-exports it — `.mjs` because the packages are not `type: module` and a flat
+config must load as ESM.
+
+`next-js` and `react-internal` variants are deliberately absent. Nothing here
+is React yet; they arrive with `packages/ui` and `apps/www` rather than sitting
+unused and pulling plugins for frameworks the repo does not have.
 
 ## Code style
 
