@@ -16,7 +16,8 @@
   },
   "scripts": {
     "build": "tsup ./*.ts --format esm,cjs --dts",
-    "lint": "eslint ./**/*.ts* --fix"
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
   },
   "license": "MIT",
   "author": "myworldx",
@@ -37,7 +38,8 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^18.6.0",
-    "@commitlint/config-conventional": "^18.6.0"
+    "@commitlint/config-conventional": "^18.6.0",
+    "@myworldx/ts-config": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

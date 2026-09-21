@@ -1,18 +1,17 @@
 // Based on https://github.com/walleXD/winston-prisma-transporter/blob/main/src/index.ts
 
-// @ts-expect-error type properly created in production
-import type { PrismaClient } from "@prisma/client";
-import Transport, { type TransportStreamOptions } from "winston-transport";
+import type { PrismaClient } from '@prisma/client'
+import Transport, { type TransportStreamOptions } from 'winston-transport'
 
 export interface PrismaTransporterOptions extends TransportStreamOptions {
-  prisma: PrismaClient;
-  tableName?: string;
+  prisma: PrismaClient
+  tableName?: string
 }
 
 export interface LogInfo {
-  level: string;
-  message: string;
-  meta?: Record<string, unknown>;
+  level: string
+  message: string
+  meta?: Record<string, unknown>
 }
 
 /**
@@ -28,14 +27,14 @@ export interface LogInfo {
  */
 
 export class PrismaWinstonTransporter extends Transport {
-  private prisma: PrismaClient;
-  private tableName: string;
+  private prisma: PrismaClient
+  private tableName: string
 
   constructor(options: PrismaTransporterOptions) {
-    super(options);
+    super(options)
 
-    this.prisma = options.prisma;
-    this.tableName = options.tableName ?? "userLog";
+    this.prisma = options.prisma
+    this.tableName = options.tableName ?? 'userLog'
   }
 
   /**
@@ -50,15 +49,12 @@ export class PrismaWinstonTransporter extends Transport {
    *
    * Core logging method exposed to Winston. Metadata is optional.
    */
-  log(
-    info: LogInfo,
-    callback?: (error?: Error, value?: unknown) => void,
-  ): void {
-    const { level, message, meta } = info;
+  log(info: LogInfo, callback?: (error?: Error, value?: unknown) => void): void {
+    const { level, message, meta } = info
 
     process.nextTick(() => {
       if (!callback) {
-        callback = () => {};
+        callback = () => {}
       }
 
       this.prisma[this.tableName]
@@ -71,18 +67,18 @@ export class PrismaWinstonTransporter extends Transport {
         })
         .then(() => {
           setImmediate(() => {
-            this.emit("logged", info);
-          });
+            this.emit('logged', info)
+          })
 
-          return callback && callback(undefined, true);
+          return callback && callback(undefined, true)
         })
         .catch((err: Error) => {
           setImmediate(() => {
-            this.emit("error", err);
-          });
+            this.emit('error', err)
+          })
 
-          return callback && callback(err, null);
-        });
-    });
+          return callback && callback(err, null)
+        })
+    })
   }
 }

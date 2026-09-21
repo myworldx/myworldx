@@ -1,9 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@2.3.1/schema.json",
-  "changelog":  [
-    "@svitejs/changesets-changelog-github-compact",
-    { "repo": "myworldx/myworldx" }
-  ],
+  "changelog": ["@svitejs/changesets-changelog-github-compact", { "repo": "myworldx/myworldx" }],
   "commit": false,
   "fixed": [],
   "linked": [],

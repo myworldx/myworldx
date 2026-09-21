@@ -1,11 +1,11 @@
 import '@/client/styles/globals.css'
 
+import { ReactChildren } from '@/@types/react'
+import { Footer } from '@/client/components/footer'
+import { ThemeProvider } from '@/client/components/providers'
+import { SiteHeader } from '@/client/components/site-header'
 import { cn } from '@/server/lib/cn'
 import { fonts } from '@/server/lib/fonts'
-import { ReactChildren } from '@/@types/react'
-import { SiteHeader } from '@/client/components/site-header'
-import { ThemeProvider } from '@/client/components/providers'
-import { Footer } from '@/client/components/footer'
 
 export default function RootLayout({ children }: ReactChildren) {
   return (

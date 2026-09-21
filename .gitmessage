@@ -1,0 +1,8 @@
+# <type>(<scope>): <subject>
+#
+# Types:   feat fix docs style refactor perf test build ci chore revert
+# Scope:   the package or area touched — www, ui, otel, workflows, root
+# Subject: imperative, lower case, no trailing period, <= 72 chars
+#
+# Body: what changed and why, not how. Wrap at 72.
+# Footer: BREAKING CHANGE: <description>, or Closes #123
