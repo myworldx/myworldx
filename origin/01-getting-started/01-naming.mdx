@@ -1,0 +1,25 @@
+---
+title: Naming and ordering
+description: How prefixes and config.yml decide what appears where.
+---
+
+## Prefixes
+
+A leading number followed by `-`, `_` or `.` sets order and is removed from the
+slug. `02-install.mdx` is served at `/install` and sorts after `01-naming.mdx`.
+
+## Ordering strategies
+
+Three strategies are available, set per folder in `config.yml`:
+
+- `prefix` orders by the numeric prefix, falling back to the title
+- `alphabetical` orders by title, comparing numbers inside it naturally
+- `timestamp` orders by the `date` in each page's frontmatter
+
+`timestamp` defaults to newest first; the others default to ascending. Set
+`direction` to override.
+
+## Hiding a folder
+
+Give it `hidden: true` in its `config.yml` and it disappears from the tree
+without being deleted.

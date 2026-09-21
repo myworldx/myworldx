@@ -3,13 +3,29 @@
 import * as React from 'react'
 import { ThemeProvider as NextThemesProvider, useTheme } from 'next-themes'
 
+import { META_THEME_COLORS } from '@/lib/config'
+
 function ThemeProvider({ children, ...props }: React.ComponentProps<typeof NextThemesProvider>) {
   return (
     <NextThemesProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange {...props}>
       <ThemeHotkey />
+      <ThemeColorSync />
       {children}
     </NextThemesProvider>
   )
+}
+
+function ThemeColorSync() {
+  const { resolvedTheme } = useTheme()
+
+  React.useEffect(() => {
+    const meta = document.querySelector('meta[name="theme-color"]')
+    if (!meta) return
+
+    meta.setAttribute('content', resolvedTheme === 'dark' ? META_THEME_COLORS.dark : META_THEME_COLORS.light)
+  }, [resolvedTheme])
+
+  return null
 }
 
 function isTypingTarget(target: EventTarget | null) {

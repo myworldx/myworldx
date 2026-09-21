@@ -1,0 +1,30 @@
+---
+title: Your repositories, rendered
+description: Files and folders in a GitHub repository become the pages of a site.
+---
+
+A repository's name carries an extension that decides what kind of node it
+becomes. Its folders and markdown files become the page tree underneath.
+
+| Repository        | Becomes                     |
+| ----------------- | --------------------------- |
+| `notes.blog`      | Dated entries, newest first |
+| `me.index`        | The profile root            |
+| `sidegig.project` | A project write-up          |
+| `thought.post`    | A single standalone page    |
+
+## How a tree is read
+
+Every folder may carry a `config.yml` that sets its title, its ordering and
+whether it is hidden. Folders inherit the ordering of their parent unless they
+override it.
+
+A numeric prefix on a file or folder sets its position and is stripped from the
+URL, so `01-getting-started` is served at `/getting-started`.
+
+## Where the content comes from
+
+Today these pages are read from the `origin/` directory through a filesystem
+adapter. The engine itself does not know that — it reads through a
+`ContentSource`, and a GitHub-backed implementation of the same interface is
+what turns repositories into sites.
