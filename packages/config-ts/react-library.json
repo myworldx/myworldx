@@ -4,8 +4,11 @@
   "extends": "./base.json",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "lib": ["ES2015", "DOM"],
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "target": "es6"
+    "moduleResolution": "bundler",
+    "target": "ES2022",
+    "allowJs": true,
+    "resolveJsonModule": true
   }
 }

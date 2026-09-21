@@ -1,0 +1,11 @@
+{
+  "extends": "@myworldx/ts-config/react-library.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "paths": {
+      "@myworldx/ui/*": ["./src/*"]
+    }
+  },
+  "include": ["src", "*.mjs"],
+  "exclude": ["node_modules", "dist"]
+}
