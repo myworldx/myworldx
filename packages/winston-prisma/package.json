@@ -8,7 +8,8 @@
   "scripts": {
     "build": "tsup src/index.ts --format esm,cjs --dts",
     "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
-    "lint": "eslint src/**/*.ts* --fix"
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [
     "winston",
@@ -24,6 +25,7 @@
     "winston-transport": "4.7.0"
   },
   "devDependencies": {
+    "@myworldx/ts-config": "workspace:*",
     "tsup": "8.0.1",
     "typescript": "5.3.3"
   }

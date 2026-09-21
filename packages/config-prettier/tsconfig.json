@@ -1,0 +1,10 @@
+{
+  "extends": "@myworldx/ts-config/base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "moduleResolution": "bundler",
+    "lib": ["ES2022"]
+  },
+  "include": ["*.ts"],
+  "exclude": ["node_modules", "dist"]
+}

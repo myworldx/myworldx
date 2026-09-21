@@ -1,51 +1,44 @@
 {
-  "private": false,
+  "name": "myworldx",
+  "private": true,
   "workspaces": [
+    "apps/*",
     "packages/*"
   ],
   "scripts": {
-    "version-packages": "changeset version",
-    "release": "turbo run build --filter=!docs && changeset publish",
-    "build": "turbo run build",
-    "eslint": "eslint",
     "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "build:packages": "turbo run build --filter=./packages/*",
     "lint": "turbo run lint",
-    "lint.fix": "turbo run lint -- --fix",
-    "lint.eslint": "ESLINT_USE_FLAT_CONFIG=true npx eslint -c eslint.config.mjs ./apps/tests.ts",
-    "lint.typescript": "turbo run typescript",
-    "lint.eslint.test": "ESLINT_USE_FLAT_CONFIG=true eslint -c eslint.config.mjs ./apps/tests.ts",
-    "prettier.check": "prettier --check .",
-    "prettier.fix": "prettier --write .",
-    "prettier.format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "types": "tsc --noEmit",
-    "types.check": "pnpm -r run types.check",
-    "git.reset": "git reset --hard HEAD",
-    "git.clean": "git clean -d -x -e node_modules -e packages -f",
-    "git.commit": "git commit",
-    "git.add.all": "git add .",
-    "git.husky.install": "husky install",
+    "lint:fix": "turbo run lint -- --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "turbo run typecheck",
+    "test": "vitest run --passWithNoTests",
+    "test:watch": "vitest",
+    "cz": "cz",
     "changeset": "changeset",
-    "changeset.version": "changeset version",
-    "release.canary": "git checkout canary && git pull && changesets version prerelease --preid canary --force-publish && releanpm i releasese --pre --skip-questions --show-url",
-    "release.stable": "lerna version --force-publish",
     "ci:version": "changeset version",
-    "ci.publish": "pnpm publish -r",
-    "prepare": "husky"
+    "ci:publish": "pnpm build:packages && changeset publish",
+    "prepare": "husky && git config commit.template .gitmessage || true"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "pnpm prettier --write"
+    "*.{js,jsx,mjs,cjs,ts,tsx}": [
+      "prettier --write"
     ],
-    "*.{md,mdx,mjs,yml,yaml,css}": [
-      "pnpm prettier --write"
+    "*.{md,mdx,json,yml,yaml,css}": [
+      "prettier --write"
     ]
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@ianvs/prettier-plugin-sort-imports": "^4.4.0",
     "@svitejs/changesets-changelog-github-compact": "1.1.0",
-    "@turbo/gen": "^1.13.2",
+    "@turbo/gen": "^2.3.3",
     "@types/eslint": "8.56.7",
-    "@types/node": "^20.12.3",
+    "@types/node": "^24.0.0",
     "commitizen": "4.3.0",
     "cross-env": "7.0.3",
     "cz-conventional-changelog": "^3.3.0",
@@ -54,17 +47,24 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "3.6.1",
     "eslint-plugin-import": "^2.29.1",
-    "husky": "^9.0.11",
+    "husky": "^9.1.7",
     "lint-staged": "^15.2.2",
-    "prettier": "^3.2.5",
-    "turbo": "1.13.2"
+    "prettier": "^3.4.2",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.2",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^2.1.8"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "packageManager": "pnpm@8.6.10",
+  "packageManager": "pnpm@10.34.5",
+  "engines": {
+    "node": ">=24",
+    "pnpm": ">=10"
+  },
   "pnpm": {
     "overrides": {
       "jose@>=3.0.0 <=4.15.4": ">=4.15.5"

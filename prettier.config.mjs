@@ -1,0 +1,28 @@
+/** @type {import("prettier").Config} */
+export default {
+  trailingComma: 'es5',
+  tabWidth: 2,
+  printWidth: 120,
+  semi: false,
+  singleQuote: true,
+  arrowParens: 'always',
+  plugins: ['@ianvs/prettier-plugin-sort-imports'],
+  importOrder: [
+    '^(react/(.*)$)|^(react$)',
+    '^(next/(.*)$)|^(next$)',
+    '<THIRD_PARTY_MODULES>',
+    '',
+    '^@myworldx/(.*)$',
+    '',
+    '^@/types/(.*)$',
+    '^@/config/(.*)$',
+    '^@/lib/(.*)$',
+    '^@/hooks/(.*)$',
+    '^@/components/(.*)$',
+    '^@/styles/(.*)$',
+    '^@/app/(.*)$',
+    '',
+    '^[./]',
+  ],
+  importOrderTypeScriptVersion: '5.7.2',
+}

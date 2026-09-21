@@ -32,7 +32,7 @@ jobs:
         with:
           version-script: pnpm ci:version
           publish-script: pnpm ci:publish
-          commit-message: "chore: update versions"
-          pr-title: "chore: update versions"
+          commit-message: 'chore: update versions'
+          pr-title: 'chore: update versions'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
