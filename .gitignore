@@ -27,7 +27,6 @@ test/traces
 # Editors
 **/.idea
 **/.#*
-.nvmrc
 
 # next.js
 .next/
